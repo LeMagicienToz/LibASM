@@ -5,15 +5,19 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <stdlib.h>
 
 extern long ft_strlen(const char *str);
 extern void ft_strcpy(char *dest, const char *src);
 extern int ft_strcmp(const char *dest, const char *src);
 ssize_t ft_write(int fd, const void *buf, size_t count);
 ssize_t ft_read(int fd, const void *buf, size_t count);
+extern char *ft_strdup(const char *s);
+
+
 
 int main() {
-    const char *test_str = "damnwodjawd";
+    char *test_str = "damnwodjawd";
     char buffer[256];  // Buffer pour stocker les données lues
 
     //STRLEN
@@ -102,6 +106,21 @@ int main() {
             printf("|TEST| READ success: %s\n", buffer);
         }
         close(fd_two);
+        printf("\n\n");
+        
+        //strdup
+        printf("/////////// STRDUP ///////////////\n");
+            const char *src = "Hello, World!";
+        char *dup = ft_strdup(src);
 
-    return 0;
+        if (dup == NULL) {
+            printf("Erreur: %s\n", strerror(errno));
+            return 1;
+        }
+
+        printf("Original: %s\n", src);
+        printf("Duplicate: %s\n", dup);
+
+        free(dup);
+        return 0;
 }

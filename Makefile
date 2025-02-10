@@ -9,7 +9,7 @@ SRC=           ft_read.s \
 				ft_strcpy.s \
 				ft_strlen.s \
 				ft_write.s \
-				# ft_strdup.s
+				ft_strdup.s
 			
 # Liste des fichiers objets (transformation de .s en .o)
 OBJ=$(SRC:.s=.o)
