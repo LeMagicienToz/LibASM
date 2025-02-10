@@ -8,24 +8,48 @@
 #include <stdlib.h>
 
 extern long ft_strlen(const char *str);
-extern void ft_strcpy(char *dest, const char *src);
+extern char *ft_strcpy(char *dest, const char *src);
 extern int ft_strcmp(const char *dest, const char *src);
-ssize_t ft_write(int fd, const void *buf, size_t count);
-ssize_t ft_read(int fd, const void *buf, size_t count);
+extern ssize_t ft_write(int fd, const void *buf, size_t count);
+extern ssize_t ft_read(int fd, const void *buf, size_t count);
 extern char *ft_strdup(const char *s);
 
+void test_strdup() {
+    printf("\n========== TEST ft_strdup ==========\n");
+    char *test_cases[] = {
+        "Hello, World!",
+        "",
+        "abcdefghijklmnopqrstuvwxyz",
+        "Test avec caractères spéciaux !@#$%^&*()_+-=[]{}|;:'\",.<>/?`~"
+    };
+
+    for (int i = 0; i < 4; i++) {
+        char *dup1 = strdup(test_cases[i]);
+        printf("strdup:    \"%s\"\n", dup1);
+        free(dup1);
+
+        char *dup2 = ft_strdup(test_cases[i]);
+        printf("ft_strdup: \"%s\"\n", dup2);
+        free(dup2);
+    }
+}
 
 
 int main() {
     char *test_str = "damnwodjawd";
+    char *empty_str = "";
     char buffer[256];  // Buffer pour stocker les données lues
 
     //STRLEN
     printf("/////////// STRLEN ///////////////\n");
     long length = ft_strlen(test_str);
     long true_length = strlen(test_str);
+    int e_length = ft_strlen(empty_str);
+    int e_true_length= strlen(empty_str);
     printf("|REAL| Longueur de \"%s\" = %ld\n", test_str, true_length);
     printf("|TEST| Longueur de \"%s\" = %ld\n", test_str, length);
+    printf("|REAL| Longueur de \"%s\" = %d\n", empty_str, e_true_length);
+    printf("|TEST| Longueur de \"%s\" = %d\n", empty_str, e_length);
     printf("\n\n");
 
     //STRCPY
@@ -63,6 +87,7 @@ int main() {
     printf("ERROR CASE |TEST| ret value = %ld" ,ft_write(-5, "|TEST|\n", 7));
     printf(" errno = %d" ,errno);
     printf(" error message = %s\n" ,strerror(errno));
+    errno = 0;
     printf("\n\n");
 
     
@@ -110,17 +135,5 @@ int main() {
         
         //strdup
         printf("/////////// STRDUP ///////////////\n");
-            const char *src = "Hello, World!";
-        char *dup = ft_strdup(src);
-
-        if (dup == NULL) {
-            printf("Erreur: %s\n", strerror(errno));
-            return 1;
-        }
-
-        printf("Original: %s\n", src);
-        printf("Duplicate: %s\n", dup);
-
-        free(dup);
-        return 0;
+       test_strdup();
 }
